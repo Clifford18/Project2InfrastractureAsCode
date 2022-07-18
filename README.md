@@ -2,4 +2,4 @@
 Deploy a high-availability web app using CloudFormation project. 
 
 ## Output Link
-http:// 
+http://mySer-WebAp-1OZGRC74QQ4C1-1799789660.us-east-1.elb.amazonaws.com 
