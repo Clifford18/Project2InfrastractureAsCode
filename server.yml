@@ -39,7 +39,7 @@ Resources:
       GroupDescription: Allow http to our load balancer
       VpcId:
         Fn::ImportValue:
-          !Sub "${EnvironmentName}-VPCID"
+          !Sub "${EnvironmentName}-vpc-0a881b7687a5bae53"
       SecurityGroupIngress:
         - IpProtocol: tcp
           FromPort: 80
@@ -57,11 +57,11 @@ Resources:
       GroupDescription: Allow http to our hosts and SSH from local only
       VpcId:
         Fn::ImportValue:
-          !Sub "${EnvironmentName}-VPCID"
+          !Sub "${EnvironmentName}-vpc-0a881b7687a5bae53"
       SecurityGroupIngress:
         - IpProtocol: tcp
-          FromPort: 8080
-          ToPort: 8080
+          FromPort: 80
+          ToPort: 80
           CidrIp: 0.0.0.0/0
         - IpProtocol: tcp
           FromPort: 22
@@ -99,8 +99,8 @@ Resources:
     Type: AWS::AutoScaling::AutoScalingGroup
     Properties:
       VPCZoneIdentifier:
-        - Fn::ImportValue:
-            !Sub "${EnvironmentName}-PRIV-NETS"
+        - Fn::ImportValue: !Sub "${EnvironmentName}-subnet-0eeffe23cdf99bbba"
+        - Fn::ImportValue: !Sub "${EnvironmentName}-subnet-03c55aeea04b30078"
       LaunchConfigurationName:
         Ref: WebAppLaunchConfig
       MinSize: '3'
@@ -112,8 +112,8 @@ Resources:
     Type: AWS::ElasticLoadBalancingV2::LoadBalancer
     Properties:
       Subnets:
-        - Fn::ImportValue: !Sub "${EnvironmentName}-PUB1-SN"
-        - Fn::ImportValue: !Sub "${EnvironmentName}-PUB2-SN"
+        - Fn::ImportValue: !Sub "${EnvironmentName}-subnet-0feb997b1c210b83a"
+        - Fn::ImportValue: !Sub "${EnvironmentName}-subnet-080e62a85d82bf29b"
       SecurityGroups:
         - Ref: LoadBalancerSecGroup
 
@@ -154,7 +154,7 @@ Resources:
       UnhealthyThresholdCount: 5
       VpcId:
         Fn::ImportValue:
-          Fn::Sub: "${EnvironmentName}-VPCID"
+          Fn::Sub: "${EnvironmentName}-vpc-0a881b7687a5bae53"
 
 Outputs:
 
