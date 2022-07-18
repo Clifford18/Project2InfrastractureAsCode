@@ -155,3 +155,11 @@ Resources:
       VpcId:
         Fn::ImportValue:
           Fn::Sub: "${EnvironmentName}-VPCID"
+
+Outputs:
+
+  WebAppAddress:
+    Description: WebApp public address
+    Value: !Join [ "://", [ "http", !GetAtt WebAppLoadBalancer.DNSName ] ]
+    Export:
+      Name: WebAppPublicAddress
